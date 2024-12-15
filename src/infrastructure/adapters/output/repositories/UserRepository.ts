@@ -68,6 +68,7 @@ export class UserRepository implements IUserRepository {
             password: user.password,
             name: user.name? user.name : '',
             isVerified: user.isVerified,
+            accountType: user.accountType ? user.accountType : 'FREE',
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         };

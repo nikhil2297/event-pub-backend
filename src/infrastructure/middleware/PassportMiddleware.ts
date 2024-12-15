@@ -14,4 +14,4 @@ export class PassportMiddleware {
             next();
         })(req, res, next);
     }
-}
+}   

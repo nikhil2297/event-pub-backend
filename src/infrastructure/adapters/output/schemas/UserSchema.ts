@@ -25,6 +25,12 @@ const UserSchema = new Schema<IUser>({
     //     sparse: true,
     //     partialFilterExpression: { googleId: { $exists: true, $ne: null } }
     // },
+    accountType: {
+        type: String,
+        required: true,
+        enum: ['FREE', 'STARTER', 'PRO', 'ENTERPRISE'],
+        default: 'FREE'
+    },
     name: {
         type: String,
         required: false

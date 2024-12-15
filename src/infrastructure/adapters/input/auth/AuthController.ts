@@ -35,7 +35,8 @@ export class AuthController {
             const user = await this.signInUseCase.execute(identifier, password);
             const token = this.jwtService.generateToken({
                 userId: user.username,
-                email: user.email
+                email: user.email,
+                type: user.accountType
             });
 
             const refreshToken = this.jwtService.generateRefreshToken({
