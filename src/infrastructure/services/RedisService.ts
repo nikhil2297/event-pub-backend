@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from "redis";
-import { IRedisService } from "../../application/ports/IRedisService";
+import { IRedisService } from "../../application/ports/service/IRedisService";
 import { Logger } from "../../shared/utils/Logger";
 import { ConnectionError } from "../../shared/errors/ApplicationError";
 

@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { IUserRepository } from "../../../../application/ports/IUserRepository";
 import { UserRepository } from "../../output/repositories/UserRepository";
 import { PassportMiddleware } from "../../../middleware/PassportMiddleware";
 import { AuthController } from "./AuthController";

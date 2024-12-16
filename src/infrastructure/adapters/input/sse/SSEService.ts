@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { ISSEService } from "../../../../application/ports/ISSEService";
-import { IRedisService } from "../../../../application/ports/IRedisService";
+import { ISSEService } from "../../../../application/ports/service/ISSEService";
+import { IRedisService } from "../../../../application/ports/service/IRedisService";
 import { Logger } from "../../../../shared/utils/Logger";
 
 export class SSEService implements ISSEService {

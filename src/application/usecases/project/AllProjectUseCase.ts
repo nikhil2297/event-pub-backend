@@ -1,4 +1,4 @@
-import { IProjectRepository } from "../../ports/IProjectRepository";
+import { IProjectRepository } from "../../ports/repository/IProjectRepository";
 
 export class AllProjectUseCase {
     constructor(private readonly projectRepository: IProjectRepository) {}

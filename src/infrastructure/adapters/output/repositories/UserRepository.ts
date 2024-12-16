@@ -1,10 +1,10 @@
-import { IUserRepository } from "../../../../application/ports/IUserRepository";
 import { CreateUserDTO } from "../../../../domain/dtos/CreateUserDTO";
 import { IUser } from "../../../../domain/entities/IUser";
 import bcrypt from "bcrypt";
 import { UserModel } from "../schemas/UserSchema";
 import { Logger } from "../../../../shared/utils/Logger";
 import { DatabaseError, NotFoundError, UnauthorizedError } from "../../../../shared/errors/ApplicationError";
+import { IUserRepository } from "../../../../application/ports/repository/IUserRepository";
 
 export class UserRepository implements IUserRepository {
     async create(data: CreateUserDTO): Promise<IUser> {

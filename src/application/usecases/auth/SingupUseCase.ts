@@ -1,7 +1,7 @@
 import { CreateUserDTO } from "../../../domain/dtos/CreateUserDTO";
 import { IUser } from "../../../domain/entities/IUser";
 import { ConnectionError, ValidationError } from "../../../shared/errors/ApplicationError";
-import { IUserRepository } from "../../ports/IUserRepository";
+import { IUserRepository } from "../../ports/repository/IUserRepository";
 import { UserValidator } from "../../validators/UserValidator";
 
 export class SignUpUseCase {

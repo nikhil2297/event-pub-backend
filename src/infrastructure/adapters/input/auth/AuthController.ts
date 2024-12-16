@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { IUserRepository } from "../../../../application/ports/IUserRepository";
 import { SignInUseCase } from "../../../../application/usecases/auth/SignInUseCase";
 import { SignUpUseCase } from "../../../../application/usecases/auth/SingupUseCase";
 import { ResponseFormatter } from "../../../../shared/utils/ResponseFormatter";
-import { IJWTService } from "../../../../application/ports/IJWTService";
+import { IJWTService } from "../../../../application/ports/service/IJWTService";
 import { AppConfig } from "../../../config/AppConfig";
 import { JWTService } from "../../../services/JWTService";
+import { IUserRepository } from "../../../../application/ports/repository/IUserRepository";
 
 export class AuthController {
     private  signUpUseCase: SignUpUseCase;

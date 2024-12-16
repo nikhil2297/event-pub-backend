@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { IProjectRepository } from "../../../../application/ports/IProjectRepository";
 import { ResponseFormatter } from "../../../../shared/utils/ResponseFormatter";
 import { CreateProjectUseCase } from "../../../../application/usecases/project/CreateProjectUseCase";
 import { AllProjectUseCase } from "../../../../application/usecases/project/AllProjectUseCase";
@@ -8,6 +7,7 @@ import { AddMemberUseCase } from "../../../../application/usecases/project/AddMe
 import { ChangeMemberRoleUseCase } from "../../../../application/usecases/project/ChangeMemberRoleUseCase";
 import { DeleteMemberUseCase } from "../../../../application/usecases/project/DeleteMemberUseCase";
 import { DeleteProjectUseCase } from "../../../../application/usecases/project/DeleteProjectUseCase";
+import { IProjectRepository } from "../../../../application/ports/repository/IProjectRepository";
 
 export class ProjectController {
     constructor(private readonly projectRepository: IProjectRepository) {

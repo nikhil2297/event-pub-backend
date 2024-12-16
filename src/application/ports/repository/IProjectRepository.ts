@@ -1,5 +1,5 @@
-import { CreateProjectDTO } from "../../domain/dtos/CreatePorjectDTO";
-import { IProject } from "../../domain/entities/IProject";
+import { CreateProjectDTO } from "../../../domain/dtos/CreatePorjectDTO";
+import { IProject } from "../../../domain/entities/IProject";
 
 export interface IProjectRepository {
     create(data: CreateProjectDTO): Promise<IProject>;

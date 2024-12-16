@@ -35,6 +35,6 @@ const ProjectSchema = new Schema<IProject>({
     }
 }, {
     timestamps: true,
-});
+},);
 
 export const ProjectModel = mongoose.model<IProject>('Project', ProjectSchema);

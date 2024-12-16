@@ -1,4 +1,4 @@
-import { IProjectRepository } from "../../../../application/ports/IProjectRepository";
+import { IProjectRepository } from "../../../../application/ports/repository/IProjectRepository";
 import { CreateProjectDTO } from "../../../../domain/dtos/CreatePorjectDTO";
 import { IProject } from "../../../../domain/entities/IProject";
 import { DatabaseError, ValidationError } from "../../../../shared/errors/ApplicationError";

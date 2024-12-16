@@ -1,4 +1,4 @@
-import { IProjectRepository } from "../../ports/IProjectRepository";
+import { IProjectRepository } from "../../ports/repository/IProjectRepository";
 import { ProjectValidator } from "../../validators/ProjectValidator";
 
 export class ChangeMemberRoleUseCase {

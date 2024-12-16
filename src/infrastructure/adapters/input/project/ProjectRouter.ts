@@ -24,4 +24,8 @@ export class ProjectRouter {
         this.router.post('/remove-member', TokenMiddleware.validateToken, AdminRoleMiddleware ,this.projectController.removeMember.bind(this.projectController));
         this.router.post('/change-member-role', TokenMiddleware.validateToken, AdminRoleMiddleware ,this.projectController.changeMemberRole.bind(this.projectController));
     }
+
+    getRouter(): Router {
+        return this.router;
+    }
 }

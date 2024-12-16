@@ -1,6 +1,6 @@
 import { IUser } from "../../../domain/entities/IUser";
 import { UnauthorizedError } from "../../../shared/errors/ApplicationError";
-import { IUserRepository } from "../../ports/IUserRepository";
+import { IUserRepository } from "../../ports/repository/IUserRepository";
 import { UserValidator } from "../../validators/UserValidator";
 
 export class SignInUseCase {

@@ -1,4 +1,4 @@
-import { IJWTService } from "../../application/ports/IJWTService";
+import { IJWTService } from "../../application/ports/service/IJWTService";
 import { UnauthorizedError } from "../../shared/errors/ApplicationError";
 import { Logger } from "../../shared/utils/Logger";
 import { AppConfig } from "../config/AppConfig";
