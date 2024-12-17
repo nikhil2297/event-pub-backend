@@ -5,10 +5,10 @@ import { ChannelValidator } from "../../validators/ChannelValidator";
 export class UpdateSettingsUseCase {
     constructor(private readonly channelRepository: IChannelRepository) {}
 
-    async execute(channelName: string, projectId: string, userIdentifier: string, settings: Partial<IChannel['settings']>): Promise<IChannel> {
+    async execute(channelName: string, projectName: string, userIdentifier: string, settings: Partial<IChannel['settings']>): Promise<IChannel> {
         try {
-            ChannelValidator.validateChannelUpdate(channelName, projectId, settings);
-            return await this.channelRepository.updateSettings(channelName, projectId, userIdentifier, settings);
+            ChannelValidator.validateChannelUpdate(channelName, projectName, settings);
+            return await this.channelRepository.updateSettings(channelName, projectName, userIdentifier, settings);
         }catch (error) {
             throw error;
         }

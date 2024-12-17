@@ -12,7 +12,7 @@ export class ChannelController {
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const usecase = new CreateChannelUseCase(this.channelRepository);
-            const channel = usecase.execute(req.body);
+            const channel = usecase.execute(req.body.data, req.body.user.userIdentifier);
 
             res.json(ResponseFormatter.success(channel, 'Channel created successfully'));
         }catch (error) {
@@ -23,7 +23,7 @@ export class ChannelController {
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
             const usecase = new DeleteChannelUseCase(this.channelRepository);
-            await usecase.execute(req.body.channelName, req.body.projectId);
+            await usecase.execute(req.body.channelName, req.body.projectName, req.body.user.userIdentifier);
 
             res.json(ResponseFormatter.success({}, 'Channel deleted successfully'));
         }catch (error) {
@@ -34,7 +34,7 @@ export class ChannelController {
     async updateSettings(req: Request, res: Response, next: NextFunction) {
         try {
             const usecase = new UpdateSettingsUseCase(this.channelRepository);
-            await usecase.execute(req.body.channelName, req.body.projectId, req.body.user.userIdentifier, req.body.settings);
+            await usecase.execute(req.body.channelName, req.body.projectName, req.body.user.userIdentifier, req.body.settings);
 
             res.json(ResponseFormatter.success({}, 'Channel settings updated successfully'));
         }catch (error) {
@@ -45,7 +45,7 @@ export class ChannelController {
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const usecase = new AllChannelUseCase(this.channelRepository);
-            const channels = usecase.execute(req.body.projectId, req.body.user.userIdentifier);
+            const channels = usecase.execute(req.body.projectName, req.body.user.userIdentifier);
 
             res.json(ResponseFormatter.success(channels, 'Channels fetched successfully'));
         }catch (error) {

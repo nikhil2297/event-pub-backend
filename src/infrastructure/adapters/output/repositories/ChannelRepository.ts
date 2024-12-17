@@ -8,14 +8,14 @@ import { ChannelModel } from "../schemas/ChannelSchema";
 import { ProjectModel } from "../schemas/ProjectSchema";
 
 export class ChannelRepository implements IChannelRepository {
-    async create(channel: CreateChannelDTO): Promise<IChannel> {
+    async create(channel: CreateChannelDTO, useIdentifier: string): Promise<IChannel> {
         try {
             Logger.info('Creating channel:', channel);
-            
+            const project = await this.getProject(channel.projectName, useIdentifier);
 
             const existingChannel = await ChannelModel.findOne({
                 name: channel.name,
-                project: channel.projectId
+                project: project.id
             });
 
             if(existingChannel) {
@@ -34,25 +34,28 @@ export class ChannelRepository implements IChannelRepository {
         }
     }
 
-    async delete(channelName: string, projectId: string): Promise<void> {
+    async delete(channelName: string, projectName: string, userIdentifier: string): Promise<void> {
         try {
-            Logger.info(`Deleting channel: ${channelName} from project: ${projectId}`);
+            Logger.info(`Deleting channel: ${channelName} from project: ${projectName}`);
+            const project = await this.getProject(projectName, userIdentifier);
             await ChannelModel.deleteOne({
                 name: channelName,
-                project: projectId
+                project: project.id
             });
         }catch (error) {
             Logger.error("Error deleting channel", error);
             throw new DatabaseError('Error deleting channel');
         }
     }
-    async updateSettings(channelName: string, projectId: string, userIdentifier: string, settings: Partial<IChannel["settings"]>): Promise<IChannel> {
+    async updateSettings(channelName: string, projectName: string, userIdentifier: string, settings: Partial<IChannel["settings"]>): Promise<IChannel> {
         try {
-            Logger.info(`Updating channel settings: ${channelName} from project: ${projectId}`);
+            Logger.info(`Updating channel settings: ${channelName} from project: ${projectName}`);
             
+            const project = await this.getProject(projectName, userIdentifier);
+
             const updateChannel = await ChannelModel.findOneAndUpdate({
                 name: channelName,
-                projectId: projectId
+                projectId: project.id
             },{
                 settings
             },{
@@ -71,13 +74,14 @@ export class ChannelRepository implements IChannelRepository {
         }
     }
 
-    async findByProject(projectId: string, userIdentifier: string): Promise<IChannel[]> {
+    async findByProject(projectName: string, userIdentifier: string): Promise<IChannel[]> {
         try {
-            Logger.info(`Finding channels by project: ${projectId}`);
+            Logger.info(`Finding channels by project: ${projectName}`);
+            const project = await this.getProject(projectName, userIdentifier);
             const channels = await ChannelModel.find({
-                project: projectId
+                project: project.id
             });
-
+                                                                 
             return channels;
         } catch (error) {
             Logger.error("Error finding channels by project", error);

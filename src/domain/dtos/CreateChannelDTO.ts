@@ -1,5 +1,5 @@
 export interface CreateChannelDTO {
     name: string;
-    projectId: string;
+    projectName: string;
     icon: string;
 }
