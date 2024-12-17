@@ -9,8 +9,8 @@ export class ChannelValidator {
             throw new ValidationError('Channel Name is required');
         }
 
-        if(!channel.projectId) {
-            throw new ValidationError('Project ID is required');
+        if(!channel.projectName) {
+            throw new ValidationError('Project Name is required');
         }
 
         if(!channel.icon) {
