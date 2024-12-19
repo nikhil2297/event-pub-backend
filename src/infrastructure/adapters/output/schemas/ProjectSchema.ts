@@ -12,6 +12,10 @@ const ProjectSchema = new Schema<IProject>({
         type: String,
         required: true
     },
+    type: {
+        type: String,
+        enum: ['PERSONAL', 'TEAM'],
+    },
     members : {
         type: [{
             identifier: {
@@ -32,6 +36,10 @@ const ProjectSchema = new Schema<IProject>({
     active: {
         type: Boolean,
         default: true
+    },
+    token: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true,

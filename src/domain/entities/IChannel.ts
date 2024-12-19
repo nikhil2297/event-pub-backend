@@ -1,5 +1,5 @@
 export interface IChannel {
-    id: string;
+    _id: string;
     name: string;
     projectId: string;
     settings: {

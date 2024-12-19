@@ -20,4 +20,8 @@ export class ChannelRouter {
         this.router.post('/update-settings', TokenMiddleware.validateToken, AdminRoleMiddleware, this.channelController.updateSettings.bind(this.channelController));
         this.router.post('/all', TokenMiddleware.validateToken, AdminRoleMiddleware, this.channelController.getAll.bind(this.channelController));
     }
+
+        getRouter(): Router {
+        return this.router;
+    }
 }
