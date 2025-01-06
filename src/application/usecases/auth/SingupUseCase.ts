@@ -25,9 +25,22 @@ export class SignUpUseCase {
         }
 
         try {
-            return await this.userRepository.create(data);
+            const userData = await this.userRepository.create(data);
+
+            return this.toUser(userData);
         } catch (error) {
             throw new ConnectionError('Failed to create user');
         }
+    }
+
+    private toUser(user: IUser): any {
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            name: user.name,
+            accountType: user.accountType,
+            isVerified: user.isVerified,
+        };
     }
 }

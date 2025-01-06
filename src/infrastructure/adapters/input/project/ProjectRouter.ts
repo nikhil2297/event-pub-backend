@@ -16,6 +16,7 @@ export class ProjectRouter {
 
     private initializeRoutes() {
         this.router.post('/create', TokenMiddleware.validateToken ,this.projectController.create.bind(this.projectController));
+        this.router.post('/onboard', TokenMiddleware.validateToken ,this.projectController.onboardProject.bind(this.projectController));
         this.router.get('/all', TokenMiddleware.validateToken ,this.projectController.getAll.bind(this.projectController));
         this.router.get('/search', TokenMiddleware.validateToken ,this.projectController.search.bind(this.projectController));
         this.router.delete('/delete', TokenMiddleware.validateToken, AdminRoleMiddleware ,this.projectController.delete.bind(this.projectController));

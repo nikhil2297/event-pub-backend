@@ -10,7 +10,7 @@ export class JWTService implements IJWTService {
     private readonly refreshTokenSecret: string;
 
     constructor(config: AppConfig) {
-        this.secretKey = config.auth.jwtSecret;
+        this.secretKey = config.auth.jwtSecret; 
         this.expiresIn = config.auth.jwtExpiresIn || '1d';
         this.refreshTokenSecret = config.auth.refreshTokenSecret;
     }

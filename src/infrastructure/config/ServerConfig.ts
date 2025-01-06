@@ -6,6 +6,7 @@ import session from "express-session";
 import passport from "passport";
 import { errorHandler } from "../middleware/ErrorMiddleware";
 import { configureRoutes } from "../adapters/input/route";
+import cookieParser from "cookie-parser";
 
 export class ServerConfig {
     private app: Application;
@@ -24,7 +25,15 @@ export class ServerConfig {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(compression());
-        this.app.use(cors());
+        this.app.use(cookieParser());
+        this.app.use(cors(
+            {
+                origin: 'http://localhost:5173',
+                credentials: true,
+                allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+
+            }
+        ));
 
         //Session and Authnetication middlewares
         this.app.use(session({
@@ -34,6 +43,7 @@ export class ServerConfig {
             cookie: {
                 secure: this.config.env === 'production',
                 httpOnly: true,
+                sameSite: 'lax',
                 maxAge: 24 * 60 * 60 * 1000 // 24 hours
             }
         }));

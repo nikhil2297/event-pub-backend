@@ -1,10 +1,11 @@
 export interface CreateChannelEventDTO {
-    projectName: string;
+    projectName?: string;
     projectId?: string;
-    channel: string;
+    channelName: string;
     channelId?: string;
+    icon?: string;
     event: string;
-    user_id?: string;
+    userId?: string;
     description: string;
     tags: Record<string, any>;
     notify: boolean;

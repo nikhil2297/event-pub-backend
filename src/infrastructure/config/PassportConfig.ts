@@ -1,10 +1,10 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
-import { IUserRepository } from "../../application/ports/IUserRepository";
 import { SignInUseCase } from "../../application/usecases/auth/SignInUseCase";
 import { AppConfig } from "./AppConfig";
 import { UnauthorizedError, ConnectionError } from "../../shared/errors/ApplicationError";
 import { Logger } from "../../shared/utils/Logger";
+import { IUserRepository } from "../../application/ports/repository/IUserRepository";
 
 export class PassportConfig {
     private appConfig: AppConfig

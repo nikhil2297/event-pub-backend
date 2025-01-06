@@ -8,14 +8,16 @@ import { ChannelModel } from "../schemas/ChannelSchema";
 import { ProjectModel } from "../schemas/ProjectSchema";
 
 export class ChannelRepository implements IChannelRepository {
-    async create(channel: CreateChannelDTO, useIdentifier: string): Promise<IChannel> {
+    async create(channel: CreateChannelDTO, projectId: string, useIdentifier: string): Promise<IChannel> {
         try {
             Logger.info('Creating channel:', channel);
-            const project = await this.getProject(channel.projectName, useIdentifier);
+            // const project = await this.getProject(channel.projectId, useIdentifier);
+
+            
 
             const existingChannel = await ChannelModel.findOne({
                 name: channel.name,
-                project: project.id
+                project: projectId,
             });
 
             if(existingChannel) {
@@ -23,7 +25,15 @@ export class ChannelRepository implements IChannelRepository {
                 throw new DatabaseError(`Channel with ${channel.name} already exists in your project`);
             }
 
-            const newChannel = new ChannelModel(channel);
+            const newChannel = new ChannelModel({
+                name: channel.name,
+                projectId: projectId,
+                settings: {
+                    icon: channel.icon,
+                    hidden: false,
+                    muted: false,
+                }
+            });
 
             const savedChannel = await newChannel.save();
 
@@ -40,7 +50,7 @@ export class ChannelRepository implements IChannelRepository {
             const project = await this.getProject(projectName, userIdentifier);
             await ChannelModel.deleteOne({
                 name: channelName,
-                project: project.id
+                project: project._id
             });
         }catch (error) {
             Logger.error("Error deleting channel", error);
@@ -55,7 +65,7 @@ export class ChannelRepository implements IChannelRepository {
 
             const updateChannel = await ChannelModel.findOneAndUpdate({
                 name: channelName,
-                projectId: project.id
+                projectId: project._id
             },{
                 settings
             },{
@@ -79,7 +89,7 @@ export class ChannelRepository implements IChannelRepository {
             Logger.info(`Finding channels by project: ${projectName}`);
             const project = await this.getProject(projectName, userIdentifier);
             const channels = await ChannelModel.find({
-                project: project.id
+                project: project._id
             });
                                                                  
             return channels;
@@ -89,10 +99,10 @@ export class ChannelRepository implements IChannelRepository {
         }
     }
 
-    private async getProject(projectName : string, userIdentifier: string) : Promise<IProject> {
+    private async getProject(projectId : string, userIdentifier: string) : Promise<IProject> {
         try {
         const project = await ProjectModel.findOne({
-            name: projectName,
+            _id: projectId,
             $or: [
                 { owner: userIdentifier },
                 { 'members.identifier': userIdentifier }
@@ -100,8 +110,8 @@ export class ChannelRepository implements IChannelRepository {
         });
 
         if(!project) {
-            Logger.error('Project not found:', projectName);
-            throw new DatabaseError(`Project with name ${projectName} not found`);
+            Logger.error('Project not found:', projectId);
+            throw new DatabaseError(`Project not found`);
         }
 
         return project;

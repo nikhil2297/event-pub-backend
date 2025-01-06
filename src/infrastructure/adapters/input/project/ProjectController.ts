@@ -8,6 +8,9 @@ import { ChangeMemberRoleUseCase } from "../../../../application/usecases/projec
 import { DeleteMemberUseCase } from "../../../../application/usecases/project/DeleteMemberUseCase";
 import { DeleteProjectUseCase } from "../../../../application/usecases/project/DeleteProjectUseCase";
 import { IProjectRepository } from "../../../../application/ports/repository/IProjectRepository";
+import { ChannelRepository } from "../../output/repositories/ChannelRepository";
+import { ApiKeyRepository } from "../../output/repositories/ApiKeyRespository";
+import { OnboardProjectUseCase } from "../../../../application/usecases/project/OnboardProjectUseCase";
 
 export class ProjectController {
     constructor(private readonly projectRepository: IProjectRepository) {
@@ -25,10 +28,24 @@ export class ProjectController {
         }
     }
 
+    async onboardProject(req: Request, res: Response, next: NextFunction) {
+        try {
+            const channelRepo = new ChannelRepository();
+            const apiKeyRepo = new ApiKeyRepository();
+            const usecase = new OnboardProjectUseCase(this.projectRepository, channelRepo, apiKeyRepo);
+            const data = await usecase.execute(req.body, req.body.user.userId);
+
+            res.json(ResponseFormatter.success(data, 'Project onboarded successfully'));
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const usecase = new AllProjectUseCase(this.projectRepository);
-            const projects = usecase.execute(req.body.user.userId);
+            const projects = await usecase.execute(req.body.user.userId);
 
             res.json(ResponseFormatter.success(projects, 'Projects fetched successfully'));
         }catch (error) {

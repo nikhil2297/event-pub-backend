@@ -18,6 +18,10 @@ const ChannelEventSchema = new Schema<IChannelEvent>({
         type: String,
         required: true
     },
+    icon: {
+        type: String,
+        required: false
+    },
     event: {
         type: String,
         required: true

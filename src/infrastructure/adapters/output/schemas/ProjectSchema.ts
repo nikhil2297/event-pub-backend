@@ -37,10 +37,6 @@ const ProjectSchema = new Schema<IProject>({
         type: Boolean,
         default: true
     },
-    token: {
-        type: String,
-        required: true
-    }
 }, {
     timestamps: true,
 },);

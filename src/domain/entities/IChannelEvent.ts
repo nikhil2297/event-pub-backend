@@ -4,6 +4,7 @@ export interface IChannelEvent {
     projectName: string;
     channelId: string;
     channelName: string;
+    icon: string;
     event: string;
     userId?: string;
     description: string;

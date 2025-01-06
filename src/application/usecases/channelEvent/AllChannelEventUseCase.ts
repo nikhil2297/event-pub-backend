@@ -1,10 +1,10 @@
 import { IChannelEvent } from "../../../domain/entities/IChannelEvent";
 import { IChannelEventRepository } from "../../ports/repository/IChannelEventRepository";
 
-export class GetChannelEventUseCase {
+export class GetAllChannelEventUseCase {
     constructor(private readonly channelEventRepository: IChannelEventRepository) {}
 
-    async execute(channelName: string, projectId: string): Promise<IChannelEvent[]> {
-        return await this.channelEventRepository.getChannelEvents(channelName, projectId);
+    async execute(projectId: string): Promise<IChannelEvent[]> {
+        return this.channelEventRepository.allChannelEvents(projectId);
     }
 }  

@@ -3,6 +3,7 @@ import { CreateProjectDTO } from "../../../../domain/dtos/CreatePorjectDTO";
 import { IProject } from "../../../../domain/entities/IProject";
 import { DatabaseError, ValidationError } from "../../../../shared/errors/ApplicationError";
 import { Logger } from "../../../../shared/utils/Logger";
+import { ChannelModel } from "../schemas/ChannelSchema";
 import { ProjectModel } from "../schemas/ProjectSchema";
 
 export class ProjectRepository implements IProjectRepository {
@@ -46,12 +47,34 @@ export class ProjectRepository implements IProjectRepository {
     
     async findByUserId(userId: string): Promise<IProject[]> {
         try {
-            const projects = await ProjectModel.find({
-                $or: [
-                    { owner: userId },
-                    { 'members.identifier': userId }
-                ]
-            });
+            const projects = await ProjectModel.aggregate([
+            // Match projects where user is owner or member
+             {
+                $match: {
+                    $or: [
+                        { owner: userId },
+                        { 'members.identifier': userId }
+                    ]
+                }
+            },
+            // Convert _id to string to match projectId in channels
+            {
+                $addFields: {
+                    stringId: { $toString: '$_id' }
+                }
+            },
+            // Lookup channels using the string ID
+            {
+                $lookup: {
+                    from: 'channels',
+                    localField: 'stringId',
+                    foreignField: 'projectId',
+                    as: 'channels'
+                }
+            }
+        ]);
+
+        Logger.info('Projects found:', projects);
 
 
             return projects;

@@ -31,7 +31,7 @@ export class SSEService implements ISSEService {
         
         for (const username of usernames) {
             if (activeChannels.includes(username)) {
-                await this.redisService.publish(username, data);
+                // await this.redisService.publish(username, data);
             }
         }    
     }

@@ -4,6 +4,7 @@ import { AuthRouter } from "./auth/AuthRouter";
 import { ProjectRouter } from "./project/ProjectRouter";
 import { ChannelRouter } from "./channel/ChannelRouter";
 import { ChannelEventRouter } from "./channelEvent/ChannelEventRouter";
+import { StreamRouter } from "./stream/StreamRouter";
 
 export const configureRoutes = (app: Application) => {
     app.use('/api/v1/users', new UserRouter().getRouter());
@@ -11,4 +12,5 @@ export const configureRoutes = (app: Application) => {
     app.use('/api/v1/projects', new ProjectRouter().getRouter());
     app.use('/api/v1/channel', new ChannelRouter().getRouter());
     app.use('/api/v1/channel/event', new ChannelEventRouter().getRouter());
+    app.use('/api/v1/stream', new StreamRouter().getRouter());
 };

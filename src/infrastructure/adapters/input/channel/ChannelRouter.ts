@@ -15,10 +15,10 @@ export class ChannelRouter {
     }
 
     private initializeRoutes() {
-        this.router.post('/create', TokenMiddleware.validateToken, AdminRoleMiddleware ,this.channelController.create.bind(this.channelController));
-        this.router.post('/delete', TokenMiddleware.validateToken, AdminRoleMiddleware, this.channelController.delete.bind(this.channelController));
-        this.router.post('/update-settings', TokenMiddleware.validateToken, AdminRoleMiddleware, this.channelController.updateSettings.bind(this.channelController));
-        this.router.post('/all', TokenMiddleware.validateToken, AdminRoleMiddleware, this.channelController.getAll.bind(this.channelController));
+        this.router.post('/create/:projectId', TokenMiddleware.validateToken ,this.channelController.create.bind(this.channelController));
+        this.router.post('/delete/:projectId', TokenMiddleware.validateToken, AdminRoleMiddleware, this.channelController.delete.bind(this.channelController));
+        this.router.post('/update-settings/:projectId', TokenMiddleware.validateToken, AdminRoleMiddleware, this.channelController.updateSettings.bind(this.channelController));
+        this.router.post('/all/:projectId', TokenMiddleware.validateToken, AdminRoleMiddleware, this.channelController.getAll.bind(this.channelController));
     }
 
         getRouter(): Router {

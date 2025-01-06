@@ -30,11 +30,24 @@ export class SignInUseCase {
         if (!isValidPassword) {
             throw new UnauthorizedError('Invalid credentials');
         }
+        
 
-        return user;
+
+        return this.toUser(user);
     }
 
     private isEmail(identifier: string): boolean {
         return identifier.includes('@');
+    }
+
+    private toUser(user: any): any {
+        return {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            name: user.name,
+            accountType: user.accountType,
+            isVerified: user.isVerified,
+        };
     }
 }

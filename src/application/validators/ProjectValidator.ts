@@ -1,4 +1,5 @@
 import { CreateProjectDTO } from "../../domain/dtos/CreatePorjectDTO";
+import { OnboardingProjectDTO } from "../../domain/dtos/OnboardinProjectDTO";
 import { ValidationError } from "../../shared/errors/ApplicationError";
 
 export class ProjectValidator {
@@ -10,6 +11,16 @@ export class ProjectValidator {
 
         if(!data.owner) {
             throw new ValidationError('Owner is required');
+        }
+    }
+
+    static validateOnboardProject(data: OnboardingProjectDTO) : void {
+        if (!data.project) {
+            throw new ValidationError('Project Name is required');
+        }
+
+        if(!data.channel) {
+            throw new ValidationError('Channel is required');
         }
     }
 

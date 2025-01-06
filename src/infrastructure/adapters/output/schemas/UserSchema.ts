@@ -47,6 +47,8 @@ const UserSchema = new Schema<IUser>({
             delete ret.id;
             delete ret.__v;
             delete ret.password;
+
+            return ret;
         }
     }
 });

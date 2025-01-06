@@ -2,16 +2,33 @@ import { createClient, RedisClientType } from "redis";
 import { IRedisService } from "../../application/ports/service/IRedisService";
 import { Logger } from "../../shared/utils/Logger";
 import { ConnectionError } from "../../shared/errors/ApplicationError";
+import { NotificationType } from "../../shared/utils/NotificationType";
 
 export class RedisService implements IRedisService {
+    private static instance: RedisService;
     private pubClient: RedisClientType;
     private subClient: RedisClientType;
+    private isInitialized: boolean = false;
 
     constructor(redisUrl: string) {
         this.pubClient = createClient({ url: redisUrl });
         this.subClient = createClient({ url: redisUrl });
 
         this.setupErrorHandlers();
+    }
+
+    public static getInstance(redisUrl?: string): RedisService {
+        if (!RedisService.instance && redisUrl) {
+            RedisService.instance = new RedisService(redisUrl);
+        }
+        return RedisService.instance;
+    }
+
+    async initialize(): Promise<void> {
+        if (!this.isInitialized) {
+            await this.connect();
+            this.isInitialized = true;
+        }
     }
 
     private setupErrorHandlers(): void {
@@ -44,7 +61,8 @@ export class RedisService implements IRedisService {
         ]);
     }
 
-    async publish(channel: string, message: any): Promise<void> {
+    async publish(channel: string, notificationType: NotificationType, message: any): Promise<void> {
+        message.notificationType = notificationType;
         await this.pubClient.publish(channel, JSON.stringify(message));
     }
 

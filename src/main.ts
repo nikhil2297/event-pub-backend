@@ -16,18 +16,18 @@ export class Application {
         this.config = new AppConfig();
         this.server = new ServerConfig();
         this.database = MongoConnection.getInstance();
-        this.redisService = new RedisService(this.config.redis.url);
+        this.redisService = RedisService.getInstance(this.config.redis.url);
         this.sseService = new SSEService(this.redisService);
     }
 
     private async initializeServices(): Promise<void> {
-        try {
+        try {        
             // Connect to MongoDB
             await this.database.connect();
             Logger.info('MongoDB connected successfully');
 
             // Connect to Redis
-            await this.redisService.connect();
+            await this.redisService.initialize();
             Logger.info('Redis connected successfully');
 
             // Initialize SSE Service

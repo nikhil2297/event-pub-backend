@@ -1,5 +1,6 @@
-import { CreateUserDTO } from "../../domain/dtos/CreateUserDTO";
-import { IUser } from "../../domain/entities/IUser";
+import { CreateUserDTO } from "../../../domain/dtos/CreateUserDTO";
+import { IUser } from "../../../domain/entities/IUser";
+
 
 export interface IUserRepository {
     create(data: CreateUserDTO): Promise<IUser>;

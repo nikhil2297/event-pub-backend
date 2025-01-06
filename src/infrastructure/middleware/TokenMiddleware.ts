@@ -9,15 +9,16 @@ export class TokenMiddleware {
 
     static validateToken = (req: Request, res: Response, next: NextFunction) => {
         try {
+            Logger.debug("Cookies : ", req.cookies);
             const token = req.cookies.token;
 
             if(!token) {
-                throw new UnauthorizedError('Try Logging again, Token not found');
+                throw new UnauthorizedError('Try Logging a  gain, Token not found');
             }
 
             const decoded = this.jwtService.verifyToken(token);
 
-                      req.user = {
+                      req.body.user = {
                 userId: decoded.userId,
                 email: decoded.email,
                 type: decoded.type
@@ -26,13 +27,14 @@ export class TokenMiddleware {
             next();
 
         }catch (error) {
+            Logger.debug("Cookies : ", req.session);
             Logger.error('Token Validation Error', error);
 
-            res.cookie('token', {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict'
-            })
+            // res.cookie('token', {
+            //     httpOnly: true,
+            //     secure: process.env.NODE_ENV === 'production',
+            //     sameSite: 'strict'
+            // })
             next(error);
         }
     }

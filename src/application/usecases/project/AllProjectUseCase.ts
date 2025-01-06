@@ -1,3 +1,5 @@
+import { INotificationMessage } from "../../../domain/entities/INotificationMessage";
+import { NotificationService } from "../../../infrastructure/services/NotificationService";
 import { IProjectRepository } from "../../ports/repository/IProjectRepository";
 
 export class AllProjectUseCase {
